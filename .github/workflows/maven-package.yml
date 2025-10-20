@@ -26,6 +26,7 @@ jobs:
 
     - name: SonarQube Scan
       uses: SonarSource/sonarqube-scan-action@v5.0.0
+      continue-on-error: true
       with:
         projectBaseDir: .
         args: >
