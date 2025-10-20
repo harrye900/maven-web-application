@@ -1,9 +1,5 @@
-FROM openjdk:17-jre-slim
-
-WORKDIR /app
-
-COPY target/*.war app.war
-
-EXPOSE 8080
-
-CMD ["java", "-jar", "app.war"]
+FROM  tomcat:jre25-temurin-noble
+COPY target/*.war /usr/local/tomcat/webapps/webapp.war
+WORKDIR  /app
+LABEL maintainer="HARRY"  
+ENTRYPOINT ["catalina.sh" , "run"]
