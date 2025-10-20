@@ -1,3 +1,9 @@
-FROM tomcat:9.0.91-jdk11-corretto
-# author is Simon Legah of Landmark Technologies
-COPY target/*.war /usr/local/tomcat/webapps/webapp.war
+FROM openjdk:17-jre-slim
+
+WORKDIR /app
+
+COPY target/*.war app.war
+
+EXPOSE 8080
+
+CMD ["java", "-jar", "app.war"]
