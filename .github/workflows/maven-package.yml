@@ -20,4 +20,4 @@ jobs:
         distribution: 'temurin'
     
     - name: Package with Maven
-      run: mvn package
+      run: mvn package 
