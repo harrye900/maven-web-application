@@ -21,18 +21,14 @@ jobs:
         distribution: 'temurin'
         cache: 'maven'  # ✅ Improves performance by caching Maven dependencies
 
-    - name: Build and package with Maven
-      run: mvn -B clean package -DskipTests  # Skip tests to avoid test failures
-
-    - name: Debug SONAR_TOKEN
-      run: |
-        if [ -z "${{ secrets.SONAR_TOKEN }}" ]; then
-          echo "SONAR_TOKEN is empty or not set"
-        else
-          echo "SONAR_TOKEN is set (length: ${#SONAR_TOKEN})"
-        fi
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    - name: Build and test with Maven
+      run: mvn -B clean test  # Run tests to generate coverage
+    
+    - name: Generate JaCoCo coverage report
+      run: mvn jacoco:report
+    
+    - name: Package with Maven
+      run: mvn -B package -DskipTests  # Package after tests
 
     - name: SonarQube Scan
       uses: SonarSource/sonarqube-scan-action@v5.0.0
@@ -68,3 +64,9 @@ jobs:
       with:
         name: maven-artifacts
         path: target/
+    
+    - name: Upload coverage reports
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-reports
+        path: target/site/jacoco/
