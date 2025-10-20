@@ -24,6 +24,16 @@ jobs:
     - name: Build and package with Maven
       run: mvn -B clean package -DskipTests  # Skip tests to avoid test failures
 
+    - name: Debug SONAR_TOKEN
+      run: |
+        if [ -z "${{ secrets.SONAR_TOKEN }}" ]; then
+          echo "SONAR_TOKEN is empty or not set"
+        else
+          echo "SONAR_TOKEN is set (length: ${#SONAR_TOKEN})"
+        fi
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
     - name: SonarQube Scan
       uses: SonarSource/sonarqube-scan-action@v5.0.0
       continue-on-error: true
