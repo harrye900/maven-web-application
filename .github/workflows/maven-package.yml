@@ -28,16 +28,14 @@ jobs:
       run: mvn -B package -DskipTests  # Package after tests
 
     - name: SonarQube Scan
-      uses: SonarSource/sonarqube-scan-action@v5.0.0
-      continue-on-error: true
-      with:
-        projectBaseDir: .
-        args: >
-          -Dsonar.projectKey=maven-web-app
-          -Dsonar.organization=harrye900
-          -Dsonar.host.url=https://sonarcloud.io
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      run: |
+        mvn sonar:sonar \
+          -Dsonar.projectKey=maven-web-app \
+          -Dsonar.organization=harrye900 \
+          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
           -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+      continue-on-error: true
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
