@@ -1,3 +1,5 @@
+package com.mt.test;
+
 import junit.framework.TestCase;
 
 public class SimpleTest extends TestCase {
