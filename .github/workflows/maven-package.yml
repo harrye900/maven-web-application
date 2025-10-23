@@ -65,6 +65,32 @@ jobs:
         echo "Image available at: docker run -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/maven-web-app:latest"
         echo "Then browse to: http://localhost:8080"
 
+    - name: Setup Minikube
+      uses: medyagh/setup-minikube@master
+      with:
+        minikube-version: 1.32.0
+        kubernetes-version: v1.28.3
+        driver: docker
+
+    - name: Install Helm
+      uses: azure/setup-helm@v3
+      with:
+        version: '3.12.0'
+
+    - name: Deploy with Helm
+      run: |
+        helm upgrade --install maven-web-app ./helm-chart/maven-web-app \
+          --set image.repository=${{ secrets.DOCKER_USERNAME }}/maven-web-app \
+          --set image.tag=latest \
+          --wait --timeout=300s
+        
+        echo "Deployment completed!"
+        kubectl get pods
+        kubectl get services
+        
+        # Get service URL
+        minikube service maven-web-app --url || echo "Service URL not available"
+
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
       with:
