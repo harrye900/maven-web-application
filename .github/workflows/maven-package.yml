@@ -21,11 +21,8 @@ jobs:
         distribution: 'temurin'
         cache: 'maven'  # ✅ Improves performance by caching Maven dependencies
 
-    - name: Build and test with Maven
-      run: mvn -B clean test  # Run tests to generate coverage
-    
-    - name: Generate JaCoCo coverage report
-      run: mvn jacoco:report
+    - name: Build and test with Maven (with coverage)
+      run: mvn -B clean test jacoco:report  # Run tests and generate coverage report
     
     - name: Package with Maven
       run: mvn -B package -DskipTests  # Package after tests
