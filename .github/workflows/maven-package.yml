@@ -24,6 +24,15 @@ jobs:
     - name: Build and test with Maven (with coverage)
       run: mvn -B clean test jacoco:report  # Run tests and generate coverage report
     
+    - name: Display coverage summary
+      run: |
+        if [ -f target/site/jacoco/index.html ]; then
+          echo "Coverage Report Generated:"
+          grep -o "Total[^%]*%" target/site/jacoco/index.html || echo "Coverage data available in artifacts"
+        else
+          echo "No coverage report found"
+        fi
+    
     - name: Package with Maven
       run: mvn -B package -DskipTests  # Package after tests
 
