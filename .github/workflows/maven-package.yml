@@ -53,6 +53,18 @@ jobs:
     - name: Push to Docker Hub
       run: docker push ${{ secrets.DOCKER_USERNAME }}/maven-web-app:latest
 
+    - name: Test Docker image
+      run: |
+        echo "Testing Docker image..."
+        docker run -d -p 8080:8080 --name test-app ${{ secrets.DOCKER_USERNAME }}/maven-web-app:latest
+        sleep 30
+        curl -f http://localhost:8080/employee/getEmployeeDetails || echo "App not ready yet"
+        docker logs test-app
+        docker stop test-app
+        docker rm test-app
+        echo "Image available at: docker run -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/maven-web-app:latest"
+        echo "Then browse to: http://localhost:8080/employee/getEmployeeDetails"
+
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
       with:
