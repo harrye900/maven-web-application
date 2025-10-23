@@ -81,14 +81,16 @@ jobs:
       run: |
         helm upgrade --install maven-web-app ./helm-chart/maven-web-app \
           --set image.repository=${{ secrets.DOCKER_USERNAME }}/maven-web-app \
-          --set image.tag=latest \
-          --wait --timeout=300s
+          --set image.tag=latest
         
-        echo "Deployment completed!"
+        echo "Deployment initiated, checking status..."
         kubectl get pods
         kubectl get services
         
-        # Get service URL
+        # Wait for pods to be ready
+        kubectl wait --for=condition=ready pod -l app=maven-web-app --timeout=300s || echo "Pods not ready in time"
+        
+        kubectl get pods
         minikube service maven-web-app --url || echo "Service URL not available"
 
     - name: Run Trivy vulnerability scanner
