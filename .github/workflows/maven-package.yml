@@ -41,18 +41,6 @@ jobs:
     - name: Package with Maven
       run: mvn -B package -DskipTests  # Package after tests
 
-    - name: SonarQube analysis with coverage
-      run: |
-        mvn sonar:sonar \
-          -Dsonar.projectKey=maven-web-app \
-          -Dsonar.organization=harrye900 \
-          -Dsonar.host.url=https://sonarcloud.io \
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
-          -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml || echo "SonarQube scan completed with issues"
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
     - name: Build Docker image
       run: docker build -t ${{ secrets.DOCKER_USERNAME }}/maven-web-app:latest .
 
