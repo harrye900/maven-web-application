@@ -1,5 +1,6 @@
-FROM  tomcat:jre25-temurin-noble
-COPY target/*.war /usr/local/tomcat/webapps/webapp.war
-WORKDIR  /app
-LABEL maintainer="HARRY"  
-ENTRYPOINT ["catalina.sh" , "run"]
+FROM tomcat:9-jre17-temurin
+COPY target/*.war /usr/local/tomcat/webapps/ROOT.war
+WORKDIR /usr/local/tomcat
+LABEL maintainer="HARRY"
+EXPOSE 8080
+CMD ["catalina.sh", "run"]
