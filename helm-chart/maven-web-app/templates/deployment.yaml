@@ -24,13 +24,13 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /employee/getEmployeeDetails
+              path: /
               port: http
             initialDelaySeconds: 15
             periodSeconds: 10
           readinessProbe:
             httpGet:
-              path: /employee/getEmployeeDetails
+              path: /
               port: http
             initialDelaySeconds: 5
             periodSeconds: 5
