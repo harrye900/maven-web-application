@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -Dspring.profiles.active=prod -jar target/tesla.war --server.port=$PORT
+web: java -cp target/classes:target/dependency/* com.mt.WebApplication
