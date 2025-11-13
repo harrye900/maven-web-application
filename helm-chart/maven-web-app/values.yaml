@@ -1,4 +1,6 @@
 replicaCount: 2
+version: blue
+activeVersion: blue
 
 image:
   repository: harifosa/maven-web-app
