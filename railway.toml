@@ -2,7 +2,7 @@
 builder = "NIXPACKS"
 
 [deploy]
-startCommand = "java -jar target/tesla.war"
+startCommand = "java -Dserver.port=$PORT -jar target/tesla.war"
 healthcheckPath = "/"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"

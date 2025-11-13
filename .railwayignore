@@ -1,0 +1,5 @@
+Dockerfile
+Dockerfile.railway
+maven-web-app/
+target/
+.git/
