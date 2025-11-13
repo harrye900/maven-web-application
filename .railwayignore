@@ -1,5 +1,6 @@
-Dockerfile
-Dockerfile.railway
-maven-web-app/
+Procfile
+nixpacks.toml
+railway.toml
+src/
 target/
 .git/
