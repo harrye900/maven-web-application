@@ -1,1 +1,1 @@
-web: catalina.sh run
+web: /usr/local/tomcat/bin/catalina.sh run
