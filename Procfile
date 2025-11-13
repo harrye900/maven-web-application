@@ -1,1 +1,1 @@
-web: java -cp target/classes:target/dependency/* com.mt.WebApplication
+web: catalina.sh run
